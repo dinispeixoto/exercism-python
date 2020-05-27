@@ -10,21 +10,30 @@ PLANTS = {
 
 class Garden:
     def __init__(self, diagram, students = DEFAULT_STUDENTS):
-        self.garden = self._generate_plants(diagram, students)
+        self.studens = sorted(students)
+        self.garden = diagram.split("\n")
 
     def plants(self, student):
-        return [PLANTS[plant] for plant in self.garden[student]]
+        index = self.studens.index(student)
+        first, second = (index * 2), (index * 2) + 1
 
-    def _generate_plants(self, diagram, students):
-        plants = diagram.split("\n")
+        return [
+            PLANTS[self.garden[0][first]],
+            PLANTS[self.garden[0][second]],
+            PLANTS[self.garden[1][first]],
+            PLANTS[self.garden[1][second]],
+        ]
 
-        index = 0
-        garden = {}
+    # def _generate_plants(self, diagram, students):
+    #     plants = diagram.split("\n")
 
-        for (plant_a, plant_b) in zip(*plants):
-            students[index] = [plant_a, plant_b]    
+    #     index = 0
+    #     garden = {}
 
-        return garden
+    #     for (plant_a, plant_b) in zip(*plants):
+    #         students[index] = [plant_a, plant_b]    
+
+    #     return garden
 
 
 
