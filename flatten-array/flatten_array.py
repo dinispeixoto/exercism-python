@@ -8,6 +8,6 @@ def flatten(iterable):
 def flatten_generator(iterable):
     for item in iterable:
         if isinstance(item, collections.Iterable):
-            yield from flatten(item)
+            yield from flatten_generator(item)
         else:
             yield item
