@@ -1,5 +1,6 @@
 import math
 
+
 def score(x, y):
     distance = math.sqrt(x**2 + y**2)
 
@@ -9,5 +10,5 @@ def score(x, y):
         return 5
     elif distance <= 10:
         return 1
-    
-    return 0 
+
+    return 0
