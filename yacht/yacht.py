@@ -1,5 +1,5 @@
 """
-This ediceercise stub and the test suite contain several enumerated constants.
+This exercise stub and the test suite contain several enumerated constants.
 
 Since Python 2 does not have the enum module, the idiomatic way to write
 enumerated constants has traditionally been a NAME assigned to an arbitrary,
