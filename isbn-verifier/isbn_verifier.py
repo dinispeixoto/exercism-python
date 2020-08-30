@@ -1,16 +1,17 @@
 def is_valid(isbn):
-    isbn = isbn.replace("-","")
+    isbn = list(isbn.replace('-', ''))
 
-    result = 0
-    multiplier = 10
-    for value in isbn:
-        if value.isalpha():
-            if value == "X":
-                result+=10*multiplier
-            else:
-                return False
-        else:
-            result+=int(value)*multiplier
-        multiplier-=1
+    if len(isbn) != 10:
+        return False
 
-    return (result%11) == 0
+    if isbn[-1].upper() == 'X':
+        isbn[-1] = '10'
+
+    total = 0
+    for i in range(10):
+        try:
+            total += int(isbn[i])*(10-i)
+        except ValueError:
+            return False
+
+    return total % 11 == 0
