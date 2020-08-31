@@ -1,51 +1,33 @@
-class Node:
-    def __init__(self, value, succeeding=None, previous=None):
+class Node(object):
+    def __init__(self, value, next=None, prev=None):
         self.value = value
-        self.previous = previous
-        self.succeeding = succeeding
+        self.next = next
+        self.prev = prev
 
 
-class LinkedList:
+class LinkedList(object):
     def __init__(self):
-        self.front = None
-        self.back = None
+        self.head = Node(None)
+        self.head.next = self.head.prev = self.head
 
-    def push(self, value):
-        if not self.back:
-            self.back = Node(value, None, None)
-            self.front = self.back
-        else:
-            old_back = self.back
-            new_back = Node(value, None, old_back)
-            old_back.succeeding = new_back
-            self.back = new_back
+    def _unlink(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        return node.value
 
-    def pop(self):
-        if self.back.previous:
-            previous = self.back
-            self.back = self.back.previous
-        else:
-            previous = self.back
-            self.back = None
-            self.front = None
-        return previous.value
-
-    def unshift(self, value):
-        if not self.front:
-            self.back = Node(value, None, None)
-            self.front = self.back
-        else:
-            old_front = self.front
-            new_front = Node(value, old_front, None)
-            old_front.previous = new_front
-            self.front = new_front
+    def _link(self, value, prev):
+        node = Node(value, prev.next, prev)
+        node.prev.next = node
+        node.next.prev = node
 
     def shift(self):
-        if self.front.succeeding:
-            previous = self.front
-            self.front = self.front.succeeding
-        else:
-            previous = self.front
-            self.back = None
-            self.front = None
-        return previous.value
+        return self._unlink(self.head.next)
+
+    def unshift(self, value):
+        self._link(value, self.head)
+
+    def pop(self):
+        return self._unlink(self.head.prev)
+
+    def push(self, value):
+        self._link(value, self.head.prev)
